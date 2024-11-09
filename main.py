@@ -26,13 +26,17 @@ class Menu(tk.Frame):
         self.createWidgets()
 
 
-
+#OBS: isso aqui está ruim mesmo, somente salvando o progresso para a partir de mais estudos aperfeiçoar
         
     def janelaJuntar(self):
 
         def selecionarArq():
             arquivo_select = askopenfilenames(title='Selecione o PDF')
-            box_arq.insert(tk.END, arquivo_select)
+            nome_arquivo = arquivo_select[0]
+            if(nome_arquivo[-1] != 'f' and nome_arquivo[-2] != 'd' and nome_arquivo[-3] != 'p' and nome_arquivo[-4] != '.'):
+                messagebox.showerror('Type Error', 'somente arquivos do tipo PDF')
+            elif(arquivo_select != ''):
+                box_arq.insert(tk.END, arquivo_select)
 
         def GrudarPDF():
             merger = PyPDF2.PdfMerger()
@@ -41,6 +45,7 @@ class Menu(tk.Frame):
             for arq in lista_arquivos:
                 merger.append(arq[0])
             merger.write("PDF Grudado.pdf")
+            messagebox(janela2, title='teste')
 
         janela2 = tk.Toplevel()
         janela2.title("Juntador de PDFs")
@@ -71,10 +76,6 @@ class Menu(tk.Frame):
         menu_button4.place(relx=0.35, rely=0.34)
         menu_button5.place(relx=0.35, rely=0.42)
 
-
-
-
-        
-        
+    
 
 App('PDFediter', (400,400))
