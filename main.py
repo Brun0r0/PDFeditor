@@ -30,22 +30,31 @@ class Menu(tk.Frame):
         
     def janelaJuntar(self):
 
+        def deletarSel():
+            box_arq.delete(tk.ACTIVE)
+
         def selecionarArq():
             arquivo_select = askopenfilenames(title='Selecione o PDF')
             nome_arquivo = arquivo_select[0]
-            if(nome_arquivo[-1] != 'f' and nome_arquivo[-2] != 'd' and nome_arquivo[-3] != 'p' and nome_arquivo[-4] != '.'):
-                messagebox.showerror('Type Error', 'somente arquivos do tipo PDF')
-            elif(arquivo_select != ''):
+            if(nome_arquivo[-1] == 'f' and nome_arquivo[-2] == 'd' and nome_arquivo[-3] == 'p' and nome_arquivo[-4] == '.'):
                 box_arq.insert(tk.END, arquivo_select)
+            elif(arquivo_select != ''):
+                messagebox.showerror('Type Error', 'somente arquivos do tipo PDF')
+            
 
         def GrudarPDF():
-            merger = PyPDF2.PdfMerger()
             lista = box_arq.get(0, tk.END)
             lista_arquivos = list(lista)
-            for arq in lista_arquivos:
-                merger.append(arq[0])
-            merger.write("PDF Grudado.pdf")
-            messagebox(janela2, title='teste')
+            tamList = len(lista_arquivos)
+            if(tamList == 0):
+                messagebox.showerror('NULL', 'Lista vazia')
+            else:
+                merger = PyPDF2.PdfMerger()
+                for arq in lista_arquivos:
+                    merger.append(arq[0])
+                merger.write("PDF Grudado.pdf")
+                messagebox.showinfo('Concluído', 'Foi realizada a junção')
+                janela2.quit()
 
         janela2 = tk.Toplevel()
         janela2.title("Juntador de PDFs")
@@ -61,7 +70,10 @@ class Menu(tk.Frame):
         box_arq.place(relx=0.21, rely=0.3)
 
         buttom_conc = tk.Button(janela2, text="Grudar", command= GrudarPDF)
-        buttom_conc.place(relx=0.5, rely=0.8)
+        buttom_conc.place(relx=0.3, rely=0.8)
+
+        buttom_del = tk.Button(janela2, text='Deletar', command=deletarSel)
+        buttom_del.place(relx=0.7, rely=0.8)
 
     def createWidgets(self):
         menu_button1 = tk.Button(self, text='Juntar', command= self.janelaJuntar)
