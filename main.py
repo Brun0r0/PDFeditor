@@ -30,6 +30,35 @@ class Menu(tk.Frame):
         
     def janelaJuntar(self):
 
+        def arqUp():
+            posList = box_arq.curselection()
+            
+            if not posList:
+                return
+
+            for pos in posList:
+                if pos == 0:
+                    continue
+
+                text = box_arq.get(pos)
+                box_arq.delete(pos)
+                box_arq.insert(pos-1, text)
+
+        def arqDown():
+            posList = box_arq.curselection()
+            
+            if not posList:
+                return
+
+            for pos in posList:
+                if pos == box_arq.size() - 1:
+                    continue
+
+                text = box_arq.get(pos)
+                box_arq.delete(pos)
+                box_arq.insert(pos+1, text)
+
+
         def deletarSel():
             box_arq.delete(tk.ACTIVE)
 
@@ -74,6 +103,12 @@ class Menu(tk.Frame):
 
         buttom_del = tk.Button(janela2, text='Deletar', command=deletarSel)
         buttom_del.place(relx=0.7, rely=0.8)
+
+        buttom_pos_up = tk.Button(janela2, text='↑', command=arqUp)
+        buttom_pos_up.place(relx=0.85, rely=0.5)
+
+        buttom_pos_down = tk.Button(janela2, text='↓', command=arqDown)
+        buttom_pos_down.place(relx=0.85, rely=0.6)
 
     def createWidgets(self):
         menu_button1 = tk.Button(self, text='Juntar', command= self.janelaJuntar)
