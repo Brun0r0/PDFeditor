@@ -3,6 +3,7 @@ from tkinter import ttk
 from tkinter.filedialog import askopenfilenames
 from tkinter import messagebox
 import PyPDF2    
+from PIL import Image, ImageTk
 
 class App(tk.Tk):
 
@@ -37,12 +38,20 @@ class Menu(tk.Frame):
 
         self.createWidgets()
 
+<<<<<<< HEAD
 #Ainda precisa de um refinamento visual no Menu
 
     def createWidgets(self):
         tk.Button(self, text='Juntar', command=lambda: self.parent.showFrame(Join)).pack(pady=30)
         tk.Button(self, text='Separar paginas', command= lambda: self.parent.showFrame(Break)).pack(pady=30)
         tk.Button(self, text='Remover paginas', command= lambda: self.parent.showFrame(Delete)).pack(pady=30)
+=======
+
+    def createWidgets(self):
+        tk.Button(self, text='Juntar', command=lambda: self.parent.showFrame(Join)).pack(pady=30)
+        tk.Button(self, text='Separar paginas').pack(pady=30)
+        tk.Button(self, text='Remover paginas').pack(pady=30)
+>>>>>>> 59e677ae4d8322dac4166bf8bd28325ab3a9e581
         tk.Button(self, text='Converter').pack(pady=30)
         tk.Button(self, text='Editar').pack(pady=30)
 
@@ -60,7 +69,11 @@ class Join(tk.Frame):
 
     #widgets
     def createWidgets(self):
+<<<<<<< HEAD
         tk.Label(self, text='Selecione os arquivos que deseja juntar e deixe na sequência correta', background='gray', fg='white').place(relx=0.15, rely=0.05)
+=======
+        tk.Label(self, text='Selecione os arquivos que deseja juntar e deixe na sequência correta', background='gray').place(relx=0.15, rely=0.05)
+>>>>>>> 59e677ae4d8322dac4166bf8bd28325ab3a9e581
         
         tk.Button(self, text='Selecionar Arquivo', command= self.selecionarArq).place(relx=0.4, rely=0.12)
 
@@ -134,6 +147,7 @@ class Join(tk.Frame):
         else:
             messagebox.showerror('NULL', 'Lista vazia')
 
+<<<<<<< HEAD
 class Break(tk.Frame):
     def __init__(self, parent):
         super().__init__(parent)
@@ -264,5 +278,7 @@ class Delete(tk.Frame):
 
 
 
+=======
+>>>>>>> 59e677ae4d8322dac4166bf8bd28325ab3a9e581
 
 App('PDFeditor', (500,500))
