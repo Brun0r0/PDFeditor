@@ -151,15 +151,14 @@ class Break(tk.Frame):
         self.configure(background= 'gray')
 
         #Labels
-        tk.Label(self, text= 'Selecione o PDF que deseja separar', background= 'gray').place(relx=0.31, rely=0.1)
+        tk.Label(self, text= 'Selecione o PDF que deseja separar', background= 'gray', fg='white').place(relx=0.31, rely=0.1)
 
-        tk.Label(self, text='Selecione a página inicial e final que serão separadas', background='gray', fg='white').place(relx=0.2, rely=0.4)
-        tk.Label(self, text='(A página selecionada seja mantida no PDF)', background='gray', fg='red4').place(relx=0.25, rely=0.44)
+        tk.Label(self, text='Selecione a página inicial e final que serão separadas', background='gray', fg='white').place(relx=0.23, rely=0.35)
 
-        tk.Label(self, text='Ínicio', background='gray').place(relx=0.35, rely=0.49)
-        tk.Label(self, text='Fim',background='gray').place(relx=0.5, rely=0.49)
+        tk.Label(self, text='Início', background='gray', fg='white').place(relx=0.35, rely=0.42)
+        tk.Label(self, text='Fim',background='gray', fg='white').place(relx=0.5, rely=0.42)
 
-        tk.Label(self, text='Nome do novo arquivo:', background='gray').place(relx=0.15, rely=0.65)
+        tk.Label(self, text='Qual será o nome do PDF?', background='gray', fg='white').place(relx=0.23, rely=0.55)
 
         
         self.label_arq = tk.Label(self, text='Nenhum PDF selecionado', background='white', width= 40, fg='gray')
@@ -167,18 +166,16 @@ class Break(tk.Frame):
 
         #ComboBox
         self.comboBox1 = ttk.Combobox(self, state='disabled', width=5)
-        self.comboBox1.place(relx= 0.35, rely= 0.54)
+        self.comboBox1.place(relx= 0.35, rely= 0.46)
         self.comboBox2 = ttk.Combobox(self, state='disabled', width=5)
-        self.comboBox2.place(relx= 0.5, rely= 0.54)
+        self.comboBox2.place(relx= 0.5, rely= 0.46)
 
         #text
         self.nomeArq = tk.Text(self, font=('Arial', 10), width=30, height=1)
-        self.nomeArq.place(relx=0.42, rely=0.65)
+        self.nomeArq.place(relx=0.28, rely=0.60)
 
         #Buttons
         tk.Button(self, text= 'Selecionar PDF', command= self.selArq).place(relx=0.42, rely=0.18)
-
-        tk.Button(self, text='Limpar', command= self.limpar).place(relx=0.7, rely=0.31)
 
         self.separar = tk.Button(self, text='Separar', command= self.separarPDF, state='disable')
         self.separar.place(relx=0.75, rely=0.73)
@@ -204,22 +201,16 @@ class Break(tk.Frame):
 
         self.separar.configure(state='normal')
 
-    def limpar(self):
-        self.label_arq.configure(text='Nenhum PDF selecionado', fg='gray')
-        self.separar.configure(state='disable')
-
-        self.comboBox1.configure(values=[], state='disable')
-        self.comboBox1.set('')
-        self.comboBox2.configure(values=[], state='disable')
-        self.comboBox2.set('')
-
-
 
     def separarPDF(self):
         reader = PyPDF2.PdfReader(self.label_arq.cget('text'))
 
         inicio = int(self.comboBox1.get()) - 1
         fim = int(self.comboBox2.get())
+
+        if(inicio > fim):
+            messagebox.showerror('ERRO', 'Início maior que o fim')
+            return
 
         writer = PyPDF2.PdfWriter()
         
@@ -280,6 +271,7 @@ class Delete(tk.Frame):
     def gerarPDF(self):
         if(self.listBox.size() == 0):
             messagebox.showerror('Operação inviável', 'Não há como criar um PDF sem páginas')
+            return
 
         lista = list(self.listBox.get(0, tk.END))
 
@@ -297,7 +289,7 @@ class Delete(tk.Frame):
         with open(saida, 'wb') as arqSaida:
             writer.write(arqSaida)
 
-        messagebox.showinfo('Concluído', 'Páginas excluidas com sucesso')
+        messagebox.showinfo('Concluído', 'O PDF foi modificado com sucesso')
        
 
 
